@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+allure {
+    report {
+        version.set("2.22.1")
+    }
+    adapter {
+        aspectjWeaver.set(true)
+        frameworks {
+            junit5 {
+                adapterVersion.set("2.22.1")
+            }
+        }
+    }
+}
+
+
+dependencies {
+    testImplementation(
+            "com.codeborne:selenide:6.15.0",
+            "io.rest-assured:rest-assured:5.3.0",
+            "com.googlecode.json-simple:json-simple:1.1.1",
+            "org.junit.jupiter:junit-jupiter:5.9.3",
+            "io.qameta.allure:allure-selenide:2.22.1",
+            "org.slf4j:slf4j-simple:2.0.6",
+            "io.github.bonigarcia:webdrivermanager:5.3.3")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+/*tasks.withType(Test) {
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}*/
+
+task Auth_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("Auth")
+    }
+}
+task Cart_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("Cart")
+    }
+}
+task Order_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("Order")
+    }
+}
+task User_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("User")
+    }
+}
